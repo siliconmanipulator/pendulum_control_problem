@@ -6,7 +6,9 @@ A worked nonlinear-pendulum problem, from the force balance to MATLAB plots. The
 
 A point mass hangs from a rigid, massless rod attached to a fixed pivot. There is no friction or damping. Its unforced motion is described by
 
-$$ml^2\ddot\theta+mgl\sin\theta=0,$$
+```math
+ml^2\ddot\theta+mgl\sin\theta=0,
+```
 
 with $g=10\ \mathrm{m/s^2}$, $l=1\ \mathrm m$, and $\omega^2=g/l$.
 
@@ -34,7 +36,9 @@ The tasks are:
 
 The equation above has no input. To study an actual step response, we explicitly extend it to a driven pendulum:
 
-$$ml^2\ddot\theta+mgl\sin\theta=\tau(t),\qquad u(t)=\frac{\tau(t)}{ml^2}.$$
+```math
+ml^2\ddot\theta+mgl\sin\theta=\tau(t),\qquad u(t)=\frac{\tau(t)}{ml^2}.
+```
 
 Part (b) uses a **normalized unit step**, $u(t)=1$ for $t\ge0$. This input has units of angular acceleration; it is not automatically a one-newton-metre torque. The original unforced model is retained for comparison and for the original equilibrium question.
 
@@ -52,19 +56,27 @@ Taking increasing $\theta$ as positive, gravity has tangential component $-mg\si
 
 Tangential acceleration relative to the fixed pivot is $l\ddot\theta$. Newton's law therefore gives
 
-$$ml\ddot\theta=-mg\sin\theta.$$
+```math
+ml\ddot\theta=-mg\sin\theta.
+```
 
 Multiply by $l$ to obtain the torque equation:
 
-$$ml^2\ddot\theta=-mgl\sin\theta.$$
+```math
+ml^2\ddot\theta=-mgl\sin\theta.
+```
 
 An applied pivot torque adds $\tau$ to the right-hand side:
 
-$$ml^2\ddot\theta=\tau-mgl\sin\theta.$$
+```math
+ml^2\ddot\theta=\tau-mgl\sin\theta.
+```
 
 Dividing by $ml^2$ gives the model used for simulation:
 
-$$\boxed{\ddot\theta=u-\frac gl\sin\theta=u-10\sin\theta.}$$
+```math
+\boxed{\ddot\theta=u-\frac gl\sin\theta=u-10\sin\theta.}
+```
 
 We have not used $\sin\theta\approx\theta$. The simulated model is nonlinear, including the 90-degree initial displacement in Case III.
 
@@ -72,17 +84,25 @@ We have not used $\sin\theta\approx\theta$. The simulated model is nonlinear, in
 
 A state is a quantity we need to know now to predict what happens next. Angle alone is insufficient: a bob at the same angle can be moving left, moving right, or momentarily stationary. So choose angle and angular velocity:
 
-$$x_1=\theta,\qquad x_2=\dot\theta.$$
+```math
+x_1=\theta,\qquad x_2=\dot\theta.
+```
 
 Differentiate each definition:
 
-$$\dot x_1=\dot\theta=x_2,$$
+```math
+\dot x_1=\dot\theta=x_2,
+```
 
-$$\dot x_2=\ddot\theta=u-10\sin x_1.$$
+```math
+\dot x_2=\ddot\theta=u-10\sin x_1.
+```
 
 The output is specified as $y=x_2$. Thus
 
-$$\boxed{\dot x_1=x_2,\quad\dot x_2=u-10\sin x_1,\quad y=x_2.}$$
+```math
+\boxed{\dot x_1=x_2,\quad\dot x_2=u-10\sin x_1,\quad y=x_2.}
+```
 
 ![Integrator block diagram](02_block_diagram.png)
 
@@ -94,13 +114,17 @@ The first integrator starts at $x_2(0)$; the second starts at $x_1(0)$. Initial 
 
 For $t\ge0$, substitute $u=1$:
 
-$$\dot x_1=x_2,\qquad\dot x_2=1-10\sin x_1.$$
+```math
+\dot x_1=x_2,\qquad\dot x_2=1-10\sin x_1.
+```
 
 A finite step changes acceleration immediately, but angle and velocity remain continuous. Contrast this with the ideal impulse in Part (c), which causes a velocity jump.
 
 Before looking at a plot, calculate the initial acceleration:
 
-$$\ddot\theta(0^+)=1-10\sin\theta(0).$$
+```math
+\ddot\theta(0^+)=1-10\sin\theta(0).
+```
 
 | Case | Initial acceleration, rad/s² | What to expect initially |
 |---|---:|---|
@@ -119,11 +143,15 @@ The colored curve uses the left axis and shows angle. The pale curve uses the ri
 
 The step shifts the local resting angle. Set velocity and acceleration to zero:
 
-$$1-10\sin\theta_s=0\quad\Rightarrow\quad\sin\theta_s=0.1.$$
+```math
+1-10\sin\theta_s=0\quad\Rightarrow\quad\sin\theta_s=0.1.
+```
 
 The center near zero is
 
-$$\theta_s=\sin^{-1}(0.1)\approx0.100167\ \mathrm{rad}=5.739^\circ.$$
+```math
+\theta_s=\sin^{-1}(0.1)\approx0.100167\ \mathrm{rad}=5.739^\circ.
+```
 
 The corresponding center near one complete revolution is $2\pi+0.100167$. Cases IV and V therefore are not symmetric about $2\pi$ under the step.
 
@@ -133,19 +161,27 @@ There is no damping, so the bounded motions in these examples keep oscillating r
 
 Write $\theta=\theta_s+\eta$, where $\eta$ is a small displacement from the shifted center. Expand the sine to first order:
 
-$$\sin(\theta_s+\eta)\approx\sin\theta_s+\eta\cos\theta_s.$$
+```math
+\sin(\theta_s+\eta)\approx\sin\theta_s+\eta\cos\theta_s.
+```
 
 Because $10\sin\theta_s=1$, the constant terms cancel:
 
-$$\ddot\eta+10\cos\theta_s\,\eta=0.$$
+```math
+\ddot\eta+10\cos\theta_s\,\eta=0.
+```
 
 Define $\Omega=\sqrt{10\cos\theta_s}\approx3.15434\ \mathrm{rad/s}$. Then
 
-$$\eta(t)=\eta(0)\cos\Omega t+\frac{\dot\eta(0)}{\Omega}\sin\Omega t.$$
+```math
+\eta(t)=\eta(0)\cos\Omega t+\frac{\dot\eta(0)}{\Omega}\sin\Omega t.
+```
 
 For Case VI, $\eta(0)=-\theta_s$ and $\dot\eta(0)=0$, so
 
-$$\theta(t)\approx\theta_s(1-\cos\Omega t),\qquad\dot\theta(t)\approx\theta_s\Omega\sin\Omega t.$$
+```math
+\theta(t)\approx\theta_s(1-\cos\Omega t),\qquad\dot\theta(t)\approx\theta_s\Omega\sin\Omega t.
+```
 
 This predicts an angle swinging approximately between zero and $2\theta_s\approx0.200335$ rad, and a velocity amplitude around 0.316 rad/s. That agrees with the scale of the nonlinear plot. It is a local approximation, not the equation used to generate the graphs.
 
@@ -153,34 +189,48 @@ This predicts an angle swinging approximately between zero and $2\theta_s\approx
 
 The bob's speed is $l\dot\theta$, so kinetic energy is
 
-$$T=\frac12ml^2\dot\theta^2.$$
+```math
+T=\frac12ml^2\dot\theta^2.
+```
 
 Relative to the bottom position, the rise in height is $l(1-\cos\theta)$. Potential energy is
 
-$$V=mgl(1-\cos\theta).$$
+```math
+V=mgl(1-\cos\theta).
+```
 
 Divide total energy by $ml^2$ and call the result $\mathcal E$:
 
-$$\mathcal E=\frac12\dot\theta^2+10(1-\cos\theta).$$
+```math
+\mathcal E=\frac12\dot\theta^2+10(1-\cos\theta).
+```
 
 Differentiate carefully:
 
-$$\frac{d\mathcal E}{dt}=\dot\theta\ddot\theta+10\sin\theta\dot\theta
-=\dot\theta(\ddot\theta+10\sin\theta)=u\dot\theta.$$
+```math
+\frac{d\mathcal E}{dt}=\dot\theta\ddot\theta+10\sin\theta\dot\theta
+=\dot\theta(\ddot\theta+10\sin\theta)=u\dot\theta.
+```
 
 For $u=0$, this derivative is zero. For a constant input $U$, it need not be zero: the applied torque does work. Instead,
 
-$$\boxed{H=\mathcal E-U\theta\quad\text{is constant}.}$$
+```math
+\boxed{H=\mathcal E-U\theta\quad\text{is constant}.}
+```
 
 Equivalently, $\mathcal E(t)-\mathcal E(0)=U[\theta(t)-\theta(0)]$. This identity is also used to check the numerical solution.
 
 An exact implicit time relation follows by solving for velocity:
 
-$$\dot\theta=\pm\sqrt{2[H_0-10(1-\cos\theta)+U\theta]}.$$
+```math
+\dot\theta=\pm\sqrt{2[H_0-10(1-\cos\theta)+U\theta]}.
+```
 
 On a segment with a fixed velocity sign,
 
-$$t-t_0=\int_{\theta_0}^{\theta}\frac{dq}{\pm\sqrt{2[H_0-10(1-\cos q)+Uq]}}.$$
+```math
+t-t_0=\int_{\theta_0}^{\theta}\frac{dq}{\pm\sqrt{2[H_0-10(1-\cos q)+Uq]}}.
+```
 
 At a turning point the direction changes, so the appropriate sign must change. This explains why numerical integration is useful: the full nonlinear solution is not generally an elementary sine wave.
 
@@ -188,11 +238,15 @@ At a turning point the direction changes, so the appropriate sign must change. T
 
 Let $u(t)=J\delta(t)$ be an ideal normalized impulse. Integrate the equation across its very short action:
 
-$$\int_{0^-}^{0^+}\ddot\theta\,dt=\int_{0^-}^{0^+}J\delta(t)\,dt-10\int_{0^-}^{0^+}\sin\theta\,dt.$$
+```math
+\int_{0^-}^{0^+}\ddot\theta\,dt=\int_{0^-}^{0^+}J\delta(t)\,dt-10\int_{0^-}^{0^+}\sin\theta\,dt.
+```
 
 The last integral tends to zero because the sine is bounded and the time interval tends to zero. Therefore
 
-$$\boxed{\dot\theta(0^+)-\dot\theta(0^-)=J.}$$
+```math
+\boxed{\dot\theta(0^+)-\dot\theta(0^-)=J.}
+```
 
 Angle remains continuous. Starting from rest at the bottom, we can simulate the impulse response by starting the unforced model at $(\theta,\dot\theta)=(0,J)$.
 
@@ -204,7 +258,9 @@ The first panel is a single ideal impulse. The other panels use a train of finit
 
 For one ideal kick from the bottom, $\mathcal E=J^2/2$. The top of the circle has potential energy $10(1-\cos\pi)=20$. Thus the critical kick satisfies
 
-$$\frac12J_c^2=20\quad\Rightarrow\quad J_c=\sqrt{40}\approx6.32456\ \mathrm{rad/s}.$$
+```math
+\frac12J_c^2=20\quad\Rightarrow\quad J_c=\sqrt{40}\approx6.32456\ \mathrm{rad/s}.
+```
 
 At exactly that energy, the ideal trajectory approaches the upright equilibrium asymptotically. Sustained rotation requires energy above the barrier. All the single kicks here are below it.
 
@@ -218,13 +274,17 @@ The horizontal coordinate is angle; the vertical coordinate is angular velocity.
 
 At each point the vector field is
 
-$$\begin{bmatrix}\dot x_1\\\dot x_2\end{bmatrix}=\begin{bmatrix}x_2\\U-10\sin x_1\end{bmatrix}.$$
+```math
+\begin{bmatrix}\dot x_1\\\dot x_2\end{bmatrix}=\begin{bmatrix}x_2\\U-10\sin x_1\end{bmatrix}.
+```
 
 Above the horizontal axis, $x_2>0$, so trajectories move right. Below it, they move left. On the axis, the acceleration decides whether the next motion points up or down. The arrows in the plot are normalized to make their directions readable; their lengths are not acceleration measurements.
 
 For the original $U=0$ system, energy contours satisfy
 
-$$x_2=\pm\sqrt{2[\mathcal E-10(1-\cos x_1)]}.$$
+```math
+x_2=\pm\sqrt{2[\mathcal E-10(1-\cos x_1)]}.
+```
 
 Below energy 20, trajectories form closed oscillation loops. Energy 20 gives the separatrix through the upright saddles. Above 20, the unwrapped angle can keep increasing or decreasing. The left panel uses the step input; its contours come from $H$, and its equilibria shift. The right panel shows the original unforced system.
 
@@ -232,21 +292,27 @@ Below energy 20, trajectories form closed oscillation loops. Energy 20 gives the
 
 An equilibrium requires **both** state derivatives to vanish. For the original model:
 
-$$x_2^*=0,\qquad-10\sin x_1^*=0.$$
+```math
+x_2^{\ast}=0,\qquad-10\sin x_1^{\ast}=0.
+```
 
 Hence
 
-$$\boxed{(x_1^*,x_2^*)=(k\pi,0),\qquad k\in\mathbb Z.}$$
+```math
+\boxed{(x_1^{\ast},x_2^{\ast})=(k\pi,0),\qquad k\in\mathbb Z.}
+```
 
-To see what happens nearby, write $x_1=x_1^*+\eta$. Linearizing gives $\ddot\eta=-10\cos x_1^*\eta$. The equivalent Jacobian is
+To see what happens nearby, write $x_1=x_1^{\ast}+\eta$. Linearizing gives $\ddot\eta=-10\cos x_1^{\ast}\eta$. The equivalent Jacobian is
 
-$$A_* =\begin{bmatrix}0&1\\-10\cos x_1^*&0\end{bmatrix},\qquad\lambda^2+10\cos x_1^*=0.$$
+```math
+A_* =\begin{bmatrix}0&1\\-10\cos x_1^{\ast}&0\end{bmatrix},\qquad\lambda^2+10\cos x_1^{\ast}=0.
+```
 
-At $x_1^*=2k\pi$, the eigenvalues are $\pm i\sqrt{10}$. Nearby motion oscillates. To establish nonlinear stability, use energy: it has a strict local minimum there, and it is conserved. These are stable centers, but they are **not asymptotically stable**, because nearby trajectories do not lose energy and approach the equilibrium.
+At $x_1^{\ast}=2k\pi$, the eigenvalues are $\pm i\sqrt{10}$. Nearby motion oscillates. To establish nonlinear stability, use energy: it has a strict local minimum there, and it is conserved. These are stable centers, but they are **not asymptotically stable**, because nearby trajectories do not lose energy and approach the equilibrium.
 
-At $x_1^*=(2k+1)\pi$, the eigenvalues are $\pm\sqrt{10}$. One direction grows exponentially. These are unstable saddles.
+At $x_1^{\ast}=(2k+1)\pi$, the eigenvalues are $\pm\sqrt{10}$. One direction grows exponentially. These are unstable saddles.
 
-For the constant unit step, replace the equilibrium condition by $\sin\theta^*=0.1$. With $\alpha=\sin^{-1}(0.1)$, the centers are $(\alpha+2k\pi,0)$ and the saddles are $(\pi-\alpha+2k\pi,0)$. Their local classification follows from the sign of $\cos\theta^*$. More generally, constant-input equilibria exist only when $|U|\le10$; the boundary cases $|U|=10$ are degenerate and require separate analysis.
+For the constant unit step, replace the equilibrium condition by $\sin\theta^{\ast}=0.1$. With $\alpha=\sin^{-1}(0.1)$, the centers are $(\alpha+2k\pi,0)$ and the saddles are $(\pi-\alpha+2k\pi,0)$. Their local classification follows from the sign of $\cos\theta^{\ast}$. More generally, constant-input equilibria exist only when $|U|\le10$; the boundary cases $|U|=10$ are degenerate and require separate analysis.
 
 ![Energy checks and equilibria](06_energy_equilibria.png)
 
