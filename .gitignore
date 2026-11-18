@@ -1,0 +1,5 @@
+outputs/
+*.asv
+slprj/
+*.slxc
+*.log
